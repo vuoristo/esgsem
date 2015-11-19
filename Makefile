@@ -1,7 +1,7 @@
 .PHONY: all compile clean info
 compile:
 
-BASEFILE:=extended-abstract
+BASEFILE:=esgsem_ddf
 LATEXFILE:=$(BASEFILE).tex
 OUTPUTFILE:=$(BASEFILE).pdf
 INTERMEDIATES:=$(BASEFILE).log $(BASEFILE).aux $(BASEFILE).out \
