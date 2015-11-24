@@ -54,8 +54,8 @@ may be able to execute for a very long time. The possibility of unbounded
 execution leads to the problems the different dataflow mocs try to solve. A
 dataflow program capable of unbounded execution 1. may have unbounded buffer
 growth 2. if there are cycles, the execution may result in a deadlock where
-there are not enough tokens to advance the execution.
-\cite{lee2015introduction}
+there are not enough tokens to advance the execution. A good introduction on the
+dataflow MoCs is given in \cite{lee2015introduction}.
 
 One popular approach to solving these problems is the Synchronous Dataflow
 (SDF). In SDF the number of tokens produced and consumed by each actor is fixed.
@@ -94,27 +94,32 @@ computations in the nodes can be distributed to heterogeneous computing devices
 such as CPUs and GPUs. TF provides control flow operators that can be added to
 the graph to support conditional execution of parts of the graph and loops.
 
-\begin{figure}[!t]
-\centering
-\includegraphics[width=21pc]{Aalto_EN_SCI_21_RGB_y2.pdf}
-\caption{An example 1-column figure. You can also include PNG-files
-  directly. Use, \emph{e.g.}, \texttt{convert} to convert images from
-  other formats. The image width is 21 pc.}
-\label{fig:example-1col}
-\end{figure}
+maybe explain some DDF framework in more detail? \\
+what types of problems are commonly solved with DDFs?
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=43pc]{Aalto_EN_SCI_13_RGB_b1.pdf}
-\caption{An example 2-column figure. The image is in embedded PDF
-  vector format which is the best graphics format for print. The image
-  width is 43 pc.}
-\label{fig:example-2col}
-\end{figure*}
+\section{Conclusion}
+Conclude
+
+%\begin{figure}[!t]
+%\centering
+%\includegraphics[width=21pc]{Aalto_EN_SCI_21_RGB_y2.pdf}
+%\caption{An example 1-column figure. You can also include PNG-files
+%  directly. Use, \emph{e.g.}, \texttt{convert} to convert images from
+%  other formats. The image width is 21 pc.}
+%\label{fig:example-1col}
+%\end{figure}
+%
+%\begin{figure*}[t]
+%\centering
+%\includegraphics[width=43pc]{Aalto_EN_SCI_13_RGB_b1.pdf}
+%\caption{An example 2-column figure. The image is in embedded PDF
+%  vector format which is the best graphics format for print. The image
+%  width is 43 pc.}
+%\label{fig:example-2col}
+%\end{figure*}
 
 \bibliographystyle{IEEEtran}
 \bibliography{papers}
 
 \end{document}
-
 
