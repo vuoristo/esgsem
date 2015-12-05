@@ -125,6 +125,43 @@ to some extent. This similarity between functional programming and dataflow
 models of computation is explored in \cite{reekie1995realtime}.
 
 \subsection{Common Features of DDF Models}
+The dynamicity of dynamic dataflow models is introduced through variable number
+of input tokens consumed and output tokens produced by the actors
+\cite{bhattacharyya2013handbook}. In stateless actors the number of inputs
+consumed and outputs produced depends solely on the inputs. The simplest dynamic
+actors are the switch and select actors presented in figure \ref{fig:actors1}.
+The select actor takes two or more data inputs and a control input. The actor
+selects which input to forward to the output port based on the control input. The
+switch actor is the counterpart for select, taking only one data input and a
+control input. The switch actor outputs its input tokens to the output port
+selected with the control input. \cite{lee2015introduction} In the switch and
+select actors presented in the figure the number of tokens produced and consumed
+on each port is always zero or one but it could be more in some other kind of
+actor.
+
+\begin{figure}[!t]
+    \centering
+        \includegraphics[width=21pc]{ddf_actors.png}
+        \caption{Dynamic dataflow switch and select actors. Visualisation from
+        \cite{lee2015introduction}}
+        \label{fig:actors1}
+\end{figure}
+
+From simple conditional actors presented in figure \ref{fig:actors1} dynamic
+data paths can be constructed. An example of conditionally executed actors is
+presented in figure \ref{fig:conditional}. In the figure actors C and D are
+conditionally executed based on the control tokens received from the actor B.
+The conditionals provide means for implementing loops and optional data paths in
+the dataflow models.
+
+\begin{figure}[!t]
+    \centering
+        \includegraphics[width=21pc]{ddf_conditional.png}
+        \caption{Dynamic dataflow conditional constructed from the switch and
+        select actors. Visualisation from \cite{lee2015introduction}}
+        \label{fig:conditional}
+\end{figure}
+
 look at HSPS12 here \\
 explain switch / select / graph iterations \\
 
