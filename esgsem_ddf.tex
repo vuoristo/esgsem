@@ -184,7 +184,7 @@ after their inputs are available. A naive scheduler could be implemented as a
 round-robin that checks the state of each actor in the graph and executes any
 actor that has its inputs ready. However this type of scheduler results in
 inefficient execution as it does not utilize the structure of the graph to make
-scheduling decisions. More sophisticated scheduler implemenations are provided
+scheduling decisions. More sophisticated scheduler implementations are provided
 in the different DDF implementations. For example in CAL the graph is first
 partitioned in to subgraphs that can be statically scheduled. In some cases
 where there are a limited amount of alternative data paths the scheduler may
@@ -210,7 +210,7 @@ stream and predictive-coded frames which represent change from the previous
 frames. To decode the stream the difference frames need to be applied on the
 reference frames. Dynamicity in the dataflow model of the decoder is introduced
 after the input frame is parsed and the type of the frame is determined. The
-refrence frames and the difference frames are processed differently. Detailed
+reference frames and the difference frames are processed differently. Detailed
 descriptions of partitioning the MPEG4 decoder into dynamic dataflow graph are
 given in \cite{eker2003cal, roquier2008automatic}.
 
