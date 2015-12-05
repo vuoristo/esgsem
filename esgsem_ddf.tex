@@ -219,6 +219,28 @@ format in \cite{bhattacharyya2013handbook} and computing live statistics on
 arriving tweets in \cite{murray2013naiad}.
 
 \subsection{TensorFlow}
+TensorFlow is a Google framework for machine learning on heterogeneous computing
+platforms \cite{tensorflow2015-whitepaper}. The motivation for a variant of
+dataflow computing derives from two factors. First the need for efficient means of
+construction of parallel programs is only highlighted on heterogeneous platforms
+where the computations may take place on different types of computational units
+such as CPUs and GPUs and on distributed nodes that are physically separated.
+For practical usability machine learning algorithms need to be able to handle
+massive datasets. Many machine learning algorithms break down into sequential
+phases of computation that translate into actors naturally. An simple partial
+example of a machine learning algorithm represented as a dataflow graph is
+presented in figure \ref{fig:simple_tf}.
+
+\begin{figure}[!t]
+    \centering
+    \includegraphics[width=12pc]{tf_simple_neural.png}
+        \caption{A partial dataflow graph of a simple neural network. The inputs
+        b, W and x are at the bottom of the graph. The rounded rectangles
+        represent computation nodes and the output C is at the top. The graph is
+        taken from \cite{tensorflow2015-whitepaper}}
+        \label{fig:simple_tf}
+\end{figure}
+
 Motivation for DDF in TF \\
 Explain how DDF is implemented in TF \\
 
