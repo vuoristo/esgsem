@@ -152,7 +152,8 @@ data paths can be constructed. An example of conditionally executed actors is
 presented in figure \ref{fig:conditional}. In the figure actors C and D are
 conditionally executed based on the control tokens received from the actor B.
 The conditionals provide means for implementing loops and optional data paths in
-the dataflow models.
+the dataflow models. These nontrivial extensions improve the expressive power
+of the dynamic dataflow models.
 
 \begin{figure}[!t]
     \centering
@@ -162,8 +163,34 @@ the dataflow models.
         \label{fig:conditional}
 \end{figure}
 
-look at HSPS12 here \\
-explain switch / select / graph iterations \\
+\subsection{Scheduling the dynamic dataflow graphs}
+As was stated earlier the improved expressive power of the dynamic dataflow
+models results in problems with unbounded buffers and the schedulability of the
+graphs. Buck \cite{buck1993scheduling} defines scheduling in the context of
+dataflow graphs as consisting of three operations. 1. Assigning actors to
+processors 2. determining the order of execution of the actors on each processor
+3. determining the exact starting time of each actor. The strength of
+synchronous dataflow models is that these decisions can be made at compile time.
+The dynamic dataflow models need to implement a run time scheduling system.
+Especially in signal processing applications the reduced run time overhead and
+analysability of compile time scheduling is considered a big advantage.
+Therefore there exists dataflow models of computation that combine compile time
+and run time scheduling to achieve some of these advantages
+\cite{buck1993scheduling, bhattacharyya2013handbook}.
+
+The dynamic scheduling of the dataflow graphs depends on the specific dataflow
+model. The basic principle of dynamic scheduling are that actors may execute
+after their inputs are available. A naive scheduler could be implemented as a
+round-robin that checks the state of each actor in the graph and executes any
+actor that has its inputs ready. However this type of scheduler results in
+inefficient execution as it does not utilize the structure of the graph to make
+scheduling decisions. More sophisticated scheduler implemenations are provided
+in the different DDF implementations. For example in CAL the graph is first
+partitioned in to subgraphs that can be statically scheduled. In some cases
+where there are a limited amount of alternative data paths the scheduler may
+generate multiple static schedules involving some of the same actors. The
+dynamic scheduling decisions are then made between these partitions.
+\cite{eker2003cal}
 
 \subsection{Example problems solved using DDF}
 HSPS12 has MPEG4 and MP3 decoder examples \\
