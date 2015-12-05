@@ -260,7 +260,28 @@ the disk while other part of the graph is using the computational resources.
 \cite{tensorflow2015-whitepaper}
 
 \section{Conclusion}
-Conclude \\
+In this paper an overview of the dynamic dataflow models of computation was
+given, the common structures between the models were discussed and some
+application areas of the models were introduced. A wider look at the DDF MoCs is
+given in \cite{bhattacharyya2013handbook}.
+
+Dynamic dataflow is not a single strictly defined model of computation. Many
+different models fall under the classification but they share a set of features.
+All DDF models are based on dataflow graphs. Dataflow graphs are constructed of
+actors connected by edges along which tokens of data flow. While the different
+DDF MoCs have different rules for which kinds of actors are allowed, how the
+actors are scheduled etc., they all allow some data dependencies in the graph
+which results in requirement for dynamic scheduling. This balance between
+expressive power and analysability of the model is optimized by each model
+according to its goals.
+
+The demand for intuitive and powerful ways to describe parallel computations is
+growing. One answer to the demand is the use of dynamic dataflow models of
+computation. DDF MoCs have been a subject of research for decades but have
+failed to garner widespread support among practical users. With the introduction
+of new DDF frameworks such as the ones presented in \cite{murray2013naiad,
+tensorflow2015-whitepaper} the DDF models have a chance of making it to the
+mainstream.
 
 \bibliographystyle{IEEEtran}
 \bibliography{papers}
