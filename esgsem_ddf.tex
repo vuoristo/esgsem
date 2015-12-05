@@ -44,7 +44,7 @@ construction of parallel programs. In dynamic dataflow the program logic is
 divided into actors that can execute in any order depending only on the data
 availability. In most dynamic dataflow implementations the actors are stateless,
 which results in a model of computation that resembles functional programming in
-many respects. 
+many respects.
 
 As the need for high performance parallel computing is growing, dynamic dataflow
 based frameworks such as TensorFlow have been introduced to make programming
@@ -193,8 +193,30 @@ dynamic scheduling decisions are then made between these partitions.
 \cite{eker2003cal}
 
 \subsection{Example problems solved using DDF}
-HSPS12 has MPEG4 and MP3 decoder examples \\
-Stream Computation \\
+The research on dataflow models of computation have been studied extensively for
+decades and especially synchronous dataflow has been used in practice as well.
+It is no wonder then that the research community has adopted a set of
+characteristic examples of the model of computation. The MPEG decoder seems to
+be the most commonly studied workload for any new dynamic dataflow model. It is
+implemented in CAL \cite{eker2003cal} and SADF \cite{bhattacharyya2013handbook}
+to name two examples. MPEG decoder is a well defined but highly complex stream
+processing application with practical relevance so it lends itself well to
+benchmarking purposes. The MPEG video format achieves compression of the video
+data by using motion estimation.
+
+Roughly the video stream is compressed with the following technique. The stream
+is encoded into reference frames which represent single frames of the video
+stream and predictive-coded frames which represent change from the previous
+frames. To decode the stream the difference frames need to be applied on the
+reference frames. Dynamicity in the dataflow model of the decoder is introduced
+after the input frame is parsed and the type of the frame is determined. The
+refrence frames and the difference frames are processed differently. Detailed
+descriptions of partitioning the MPEG4 decoder into dynamic dataflow graph are
+given in \cite{eker2003cal, roquier2008automatic}.
+
+Other example uses of DDF models include encoding and decoding of MP3 audio
+format in \cite{bhattacharyya2013handbook} and computing live statistics on
+arriving tweets in \cite{murray2013naiad}.
 
 \subsection{TensorFlow}
 Motivation for DDF in TF \\
@@ -202,24 +224,6 @@ Explain how DDF is implemented in TF \\
 
 \section{Conclusion}
 Conclude \\
-
-%\begin{figure}[!t]
-%\centering
-%\includegraphics[width=21pc]{Aalto_EN_SCI_21_RGB_y2.pdf}
-%\caption{An example 1-column figure. You can also include PNG-files
-%  directly. Use, \emph{e.g.}, \texttt{convert} to convert images from
-%  other formats. The image width is 21 pc.}
-%\label{fig:example-1col}
-%\end{figure}
-%
-%\begin{figure*}[t]
-%\centering
-%\includegraphics[width=43pc]{Aalto_EN_SCI_13_RGB_b1.pdf}
-%\caption{An example 2-column figure. The image is in embedded PDF
-%  vector format which is the best graphics format for print. The image
-%  width is 43 pc.}
-%\label{fig:example-2col}
-%\end{figure*}
 
 \bibliographystyle{IEEEtran}
 \bibliography{papers}
