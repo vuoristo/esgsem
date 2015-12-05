@@ -221,15 +221,15 @@ arriving tweets in \cite{murray2013naiad}.
 \subsection{TensorFlow}
 TensorFlow is a Google framework for machine learning on heterogeneous computing
 platforms \cite{tensorflow2015-whitepaper}. The motivation for a variant of
-dataflow computing derives from two factors. First the need for efficient means of
-construction of parallel programs is only highlighted on heterogeneous platforms
-where the computations may take place on different types of computational units
-such as CPUs and GPUs and on distributed nodes that are physically separated.
-For practical usability machine learning algorithms need to be able to handle
-massive datasets. Many machine learning algorithms break down into sequential
-phases of computation that translate into actors naturally. An simple partial
-example of a machine learning algorithm represented as a dataflow graph is
-presented in figure \ref{fig:simple_tf}.
+dataflow computing derives from two factors. First the need for efficient means
+of construction of parallel programs is only highlighted on heterogeneous
+platforms where the computations may take place on different types of
+computational units such as CPUs and GPUs and on distributed nodes that are
+physically separated.  For practical usability machine learning algorithms need
+to be able to handle massive datasets. Many machine learning algorithms break
+down into sequential phases of computation that translate into actors naturally.
+An simple partial example of a machine learning algorithm represented as a
+dataflow graph is presented in figure \ref{fig:simple_tf}.
 
 \begin{figure}[!t]
     \centering
@@ -241,8 +241,23 @@ presented in figure \ref{fig:simple_tf}.
         \label{fig:simple_tf}
 \end{figure}
 
-Motivation for DDF in TF \\
-Explain how DDF is implemented in TF \\
+The dataflow MoC in TensorFlow is dynamic. Some of the TensorFlow nodes maintain
+and update a persistent state. TensorFlow supports loops in the graph, branching
+of the graph, conditional execution of nodes and control dependencies. Control
+dependencies are edges between the nodes with no data flowing along but they
+impose rules on the execution order. If there is a control dependency from node
+A to node B, B can not execute before A has completed.
+\cite{tensorflow2015-whitepaper}
+
+The TensorFlow runtime schedules the actors on compute devices it has been
+configured to use automatically. The open source distribution supports CPUs and
+GPUs out-of-the-box. The distributed execution on different host machines is not
+currently supported by the open source version. User has additional control of
+the asynchronous execution of sub-graphs through the use of queues. The user can
+define enqueue and dequeue operations in the graph to utilize queueing features
+of the framework. The queues can be used for example for pre-fetching data from
+the disk while other part of the graph is using the computational resources.
+\cite{tensorflow2015-whitepaper}
 
 \section{Conclusion}
 Conclude \\
