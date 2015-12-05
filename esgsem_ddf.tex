@@ -104,8 +104,25 @@ computations in the nodes can be distributed to heterogeneous computing devices
 such as CPUs and GPUs. TF provides control flow operators that can be added to
 the graph to support conditional execution of parts of the graph and loops.
 
-what types of problems are commonly solved with DDFs? \\
-explain the similarities with functional programming
+Dynamic dataflow is a useful model of computation for handling streaming data.
+Signal processing applications typically deal with streaming data in the form of
+audio, video or other kinds of streams. Streaming data can also be other types
+of numeric data, as in the TensorFlow framework, or even textual data as is
+often processed in web analytics. The successive and independent dataflow actors
+provide logical division of computation for stream processing. The stream
+processing context is encountered in the practical use of DDF MoCs
+\cite{eker2003cal, tensorflow2015-whitepaper} and in the research where most of
+the studies are focused on the performance of either video or audio stream
+applications \cite{bhattacharyya2013handbook, roquier2008automatic,
+ersfolk2014scheduling}.
+
+Although some of the practical implementations of dynamic dataflow
+\cite{tensorflow2015-whitepaper, eker2003cal} allow stateful actors, most of the
+dynamic dataflow MoCs presented in \cite{bhattacharyya2013handbook} do not
+implement stateful actors to help the analysis of the models. The division of
+computation to stateless and independent blocks resembles functional programming
+to some extent. This similarity between functional programming and dataflow
+models of computation is explored in \cite{reekie1995realtime}.
 
 \subsection{Common Features of DDF Models}
 look at HSPS12 here \\
