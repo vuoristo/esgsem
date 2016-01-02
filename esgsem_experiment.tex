@@ -40,6 +40,7 @@
 \maketitle
 
 \begin{abstract}
+In this paper an experiment is conducted on implementing dynamic dataflow graphs using Open Event Machine. A simple ddf graph is converted into an OpenEM program and its performance is measured. The results suggest that computationally such implementation may perform well. Converting the ddf graph to an OpenEM program is non-trivial.
 \end{abstract}
 
 \section{Introduction}
@@ -65,7 +66,7 @@ In this experiment dynamic dataflow actors are approximately mapped to OpenEM ex
 
 Frame numbers are updated in an independent execution object because the frame number is global and has to be accessed atomically. An atomic queue is connected to the frame number updating execution object. Both parts of the canny algorithm reside in their own execution objects and are connected to parallel queues. The actors constituting the random frame dropping are combined with the first part of the canny algorithm. With these modifications the number of execution objects becomes three.
 
-Eight initial events are created and enqueued in the atomic queue before the actual algorithm execution starts. Each event represents the progress of a single complete frame through the algorithm. The events are recycled and sent back to the atomic queue after each frame finishes the second execution object.
+Initial events are created and enqueued in the atomic queue before the actual algorithm execution starts. Each event represents the progress of a single complete frame through the algorithm. The events are recycled and sent back to the atomic queue after each frame finishes the second execution object.
 
 \section{Experiments}
 The system under study was loaded with two different workloads. In the first workload no frames were dropped throughout the execution of the program. In the second experiment, the frame dropping is initiated after 500 frames have been processed. The frames are dropped randomly with the probability of dropping the frame set to 0.5.
@@ -77,16 +78,16 @@ The system under study was loaded with two different workloads. In the first wor
         \label{fig:eo_exp1}
 \end{figure}
 
-In the first experiment the algorithm processes close to 1000 frames per second. The core utilization is presented in the figure~\ref{fig:eo_exp1}.
+In the first experiment the algorithm processes close to 1000 frames per second. The core utilization is presented in the figure~\ref{fig:eo_exp1}. The core utilization graph shows that the canny filter has been split to parts which consume roughly equal number of cycles.
 
-In the second experiment the fps for the part with no frame dropping is close to 1000 and in the frame dropping part it is close to 1300. A local approximation of fps is computed using moving average with window size 10. The resulting plot is presented in figure~\ref{fig:cyc_exp2}. The core utilization in the second experiment is presented in figure~\ref{fig:eo_exp2}.
+In the second experiment the fps for the part with no frame dropping is close to 1000 and in the frame dropping part it is close to 1300. A local approximation of throughput is computed using moving average with window size 10. The resulting plot is presented in figure~\ref{fig:cyc_exp2}. The core utilization in the second experiment is presented in figure~\ref{fig:eo_exp2}. Comparing the core utilization graphs it can be seen that the portion of cycles spent in the first part of the canny filter is increased in the second experiment.
 
 \begin{figure}
     \centering
     \begin{minipage}{0.45\textwidth}
         \centering
         \includegraphics[width=0.99\linewidth]{exp2_cyc.eps}
-        \captionof{figure}{The local fps approximation in experiment two.}
+        \captionof{figure}{The local throughput approximation in experiment two. The cycles spent per frame is presented on the vertical axis. The frame number is on the horizontal axis.}
         \label{fig:cyc_exp2}
     \end{minipage}
     \hfill
@@ -102,7 +103,8 @@ In the second experiment the fps for the part with no frame dropping is close to
 Two experiments which investigated the suitability of OpenEM for implementation of dynamic dataflow programs were conducted. In the first experiment a baseline of the system performance was established. In the second experiment dynamic behavior was introduced into the system. In the second experiment it was expected that dropping 50\% of the frames after the first part of the canny algorithm has completed should yield performance increase of roughly 25\% as the algorithm was split in two parts of about the same expected cycle count. The random frame dropping resulted in throughput increase of about 30\% which corresponds to the expected increase well.
 
 In a simple case like this experiment, it seems OpenEM can be used to implement dynamic dataflow programs with good computational efficiency. Thus, should one use OpenEM for such programs becomes more a qualitative than a quantitative question. The ddf model studied in the experiment was very simple. However, even in a simple case like this non-trivial decisions had to be made about the mapping of the actors to the execution objects. In more complex ddf programs the mapping may become complex enough to put the usefulness of using the ddf model in question.
-\end{document}
 
 \bibliographystyle{IEEEtran}
 \bibliography{papers}
+
+\end{document}
