@@ -97,8 +97,6 @@ In the second experiment the fps for the part with no frame dropping is close to
         \label{fig:eo_exp2}
     \end{minipage}%
 \end{figure}
-\bibliographystyle{IEEEtran}
-\bibliography{papers}
 
 \section{Conclusion}
 Two experiments which investigated the suitability of OpenEM for implementation of dynamic dataflow programs were conducted. In the first experiment a baseline of the system performance was established. In the second experiment dynamic behavior was introduced into the system. In the second experiment it was expected that dropping 50\% of the frames after the first part of the canny algorithm has completed should yield performance increase of roughly 25\% as the algorithm was split in two parts of about the same expected cycle count. The random frame dropping resulted in throughput increase of about 30\% which corresponds to the expected increase well.
@@ -106,3 +104,5 @@ Two experiments which investigated the suitability of OpenEM for implementation 
 In a simple case like this experiment, it seems OpenEM can be used to implement dynamic dataflow programs with good computational efficiency. Thus, should one use OpenEM for such programs becomes more a qualitative than a quantitative question. The ddf model studied in the experiment was very simple. However, even in a simple case like this non-trivial decisions had to be made about the mapping of the actors to the execution objects. In more complex ddf programs the mapping may become complex enough to put the usefulness of using the ddf model in question.
 \end{document}
 
+\bibliographystyle{IEEEtran}
+\bibliography{papers}
