@@ -41,10 +41,10 @@
 \end{abstract}
 
 \section{Introduction}
-Dataflow models of computation are well suited for stream processing tasks. There are many kinds of dataflow models but in this experiment the focus is on dynamic dataflow. Dynamic dataflow models have good powers of expression. The dynamic dataflow graphs allow for conditional execution of actors, which can be used for the construction of iterations and many other logic flows in the dataflow graphs. In general the resulting graphs are not statically schedulable. The dynamic scheduling of the actors is left for the dataflow framework.~\cite{semmapaperi} In this experiment a program of which high level structure is compatible with dynamic dataflow is implemented using Open Event Machine.
+Dataflow models of computation are well suited for stream processing tasks. There are many kinds of dataflow models but in this experiment the focus is on dynamic dataflow. Dynamic dataflow models have good powers of expression. The dynamic dataflow graphs allow for conditional execution of actors, which can be used for the construction of iterations and many other logic flows in the dataflow graphs. In general the resulting graphs are not statically schedulable. The dynamic scheduling of the actors is left for the dataflow framework.~\cite{risto-semma} In this experiment a program of which high level structure is compatible with dynamic dataflow is implemented using Open Event Machine.
 
 \section{Experiment Construction}
-OpenEM is a runtime system for concurrent programming developed by Nokia Solutions and Networks. An introduction to the OpenEM framework can be found in~\cite{dippa}. In this experiment Canny edge detection algorithm~\cite{canny} for video streams is implemented using OpenEM~\cite{openemwhite} and vlib~\cite{vlib} by Texas Instruments. The image processing and feature detection functions used in this experiment are provided in vlib. To keep things simple input and output are omitted from the experiment. The video stream is uploaded to the device memory using Code Composer Studio tools.
+OpenEM is a runtime system for concurrent programming developed by Nokia Solutions and Networks. An introduction to the OpenEM framework can be found in~\cite{risto-dippa}. In this experiment Canny edge detection algorithm~\cite{canny1986computational} for video streams is implemented using OpenEM~\cite{openemwhite} and vlib~\cite{vlib} by Texas Instruments. The image processing and feature detection functions used in this experiment are provided in vlib. To keep things simple input and output are omitted from the experiment. The video stream is uploaded to the device memory using Code Composer Studio tools.
 
 \subsection{Dynamic Dataflow Model}
 The dynamic dataflow model corresponding to the system under study is presented in figure~\ref{fig:ddf_model}. In the dataflow graph the canny algorithm is split into two parts. The first part consists of computing the gaussian filter, the x and y gradients and the maximum values of the gradients for the input frame. The first part is computed for all frames. The first part is followed by frame dropping decision that is represented in the figure~\ref{fig:ddf_model} by the \textbf{Random Decision} and \textbf{Drop Frame} actors.
@@ -63,7 +63,37 @@ In this experiment dynamic dataflow actors are approximately mapped to OpenEM ex
 
 Frame numbers are updated in an independent execution object because the frame number is global and has to be accessed atomically. An atomic queue is connected to the frame number updating execution object. Both parts of the canny algorithm reside in their own execution objects and are connected to parallel queues. The actors constituting the random frame dropping are combined with the first part of the canny algorithm. With these modifications the number of execution objects becomes three.
 
+Eight initial events are created and enqueued in the atomic queue before the actual algorithm execution starts. Each event represents the progress of a single complete frame through the algorithm. The events are recycled and sent back to the atomic queue after each frame finishes the second execution object.
 
+\section{Experiments}
+The system under study was loaded with two different workloads. In the first workload no frames were dropped throughout the execution of the program. In the second experiment, the frame dropping is initiated after 500 frames have been processed. The frames are dropped randomly with the probability of dropping the frame set at 0.5.
+
+In the first experiment the algorithm processes close to 1000 frames per second. The core utilization is presented in the figure~\ref{fig:eo_exp1}.
+\begin{figure}
+    \centering
+        \includegraphics[width=0.45\textwidth]{exp1_eo.eps}
+        \captionof{figure}{The core utilization in experiment one.}
+        \label{fig:eo_exp1}
+\end{figure}
+
+In the second experiment the fps for the part with no frame dropping is close to 1000 and in the frame dropping part it is close to 1300. A local approximation of fps is computed using moving average with window size 10. The resulting plot is presented in figure~\ref{fig:cyc_exp2}. The core utilization in the second experiment is presented in figure~\ref{fig:eo_exp2}.
+
+\begin{figure}
+    \centering
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.99\linewidth]{exp2_cyc.eps}
+        \captionof{figure}{The local fps approximation in experiment two.}
+        \label{fig:cyc_exp2}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.99\linewidth]{exp2_eo.eps}
+        \captionof{figure}{The core utilization in experiment two.}
+        \label{fig:eo_exp2}
+    \end{minipage}%
+\end{figure}
 \bibliographystyle{IEEEtran}
 \bibliography{papers}
 
