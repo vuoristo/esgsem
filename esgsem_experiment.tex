@@ -44,7 +44,12 @@
 Dataflow models of computation are well suited for stream processing tasks. There are many kinds of dataflow models but in this experiment the focus is on dynamic dataflow. Dynamic dataflow models have good powers of expression. The dynamic dataflow graphs allow for conditional execution of actors, which can be used for the construction of iterations and many other logic flows in the dataflow graphs. In general the resulting graphs are not statically schedulable. The dynamic scheduling of the actors is left for the dataflow framework.~\cite{semmapaperi} In this experiment a program of which high level structure is compatible with dynamic dataflow is implemented using Open Event Machine.
 
 \section{Experiment Construction}
-Open Event Machine is a runtime system for concurrent programming developed by Nokia Solutions and Networks. A good introduction to OpenEM can be found in~\cite{dippa}. In this experiment dynamic dataflow actors are mapped to OpenEM execution objects. The OpenEM framework does not support explicit representations of the execution graph. The dynamic dataflow model corresponding to the measured program is presented in figure~\ref{fig:ddf_model}. 
+OpenEM is a runtime system for concurrent programming developed by Nokia Solutions and Networks. An introduction to the OpenEM framework can be found in~\cite{dippa}. In this experiment Canny edge detection algorithm~\cite{canny} for video streams is implemented using OpenEM~\cite{openemwhite} and vlib~\cite{vlib} by Texas Instruments. The image processing and feature detection functions used in this experiment are provided in vlib. To keep things simple input and output are omitted from the experiment. The video stream is uploaded to the device memory using Code Composer Studio tools.
+
+\subsection{Dynamic Dataflow Model}
+The dynamic dataflow model corresponding to the system under study is presented in figure~\ref{fig:ddf_model}. In the dataflow graph the canny algorithm is split into two parts. The first part consists of computing the gaussian filter, the x and y gradients and the maximum values of the gradients for the input frame. The first part is computed for all frames. The first part is followed by frame dropping decision that is represented in the figure~\ref{fig:ddf_model} by the \textbf{Random Decision} and \textbf{Drop Frame} actors.
+
+The random decision actor takes the frame number as its input and makes random decision to drop the frame. The probability of dropping the frame is dependent on the frame number and the experiment scheme. The random decision actor is followed by the second part of the canny filter. The second part consists of computation of the hysteresis thresholding and cleaning the output of data used only in the intermediate steps of the algorithm.
 
 \begin{figure}[!h]
     \centering
@@ -52,6 +57,12 @@ Open Event Machine is a runtime system for concurrent programming developed by N
         \caption{Dynamic Dataflow model corresponding to the experiment program}
         \label{fig:ddf_model}
 \end{figure}
+
+\subsection{OpenEM Implementation of the Program}
+In this experiment dynamic dataflow actors are approximately mapped to OpenEM execution objects. In OpenEM there is overhead associated with the communication between the execution objects. The overhead is small compared to the computation of the filters. To keep the system under study simple as simple as possible, the number of independent actors in the OpenEM implementation of the ddf model is less than the number of ddf actors.
+
+Frame numbers are updated in an independent execution object because the frame number is global and has to be accessed atomically. An atomic queue is connected to the frame number updating execution object. Both parts of the canny algorithm reside in their own execution objects and are connected to parallel queues. The actors constituting the random frame dropping are combined with the first part of the canny algorithm. With these modifications the number of execution objects becomes three.
+
 
 \bibliographystyle{IEEEtran}
 \bibliography{papers}
